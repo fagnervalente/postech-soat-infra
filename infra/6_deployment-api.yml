@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-delivery
+  labels:
+    app: api-delivery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-delivery
+  template:
+    metadata:
+      name: api-delivery
+      labels:
+        app: api-delivery
+    spec:
+      initContainers:
+        - name: wait-for-database
+          image: busybox
+          command: ['sh', '-c', 'until nc -z -v -w5 svc-db-delivery 5432; do echo waiting for database init; sleep 10; done;']
+      containers:
+        - name: api-delivery-container
+          image: fagnervalente/postech-soat-webserver
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_USER
+              valueFrom: 
+                secretKeyRef: 
+                  key: DATABASE_USER
+                  name: delivery-secret
+            - name: DATABASE_PASSWORD
+              valueFrom: 
+                secretKeyRef: 
+                  key: DATABASE_PASSWORD
+                  name: delivery-secret
+            - name: MERCADOPAGO_ACCESS_TOKEN
+              valueFrom: 
+                secretKeyRef: 
+                  key: MERCADOPAGO_ACCESS_TOKEN
+                  name: delivery-secret
+          envFrom:
+            - configMapRef:
+                name: delivery-configmap
+          resources:
+            requests:
+              cpu: 250m

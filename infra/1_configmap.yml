@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delivery-configmap
+data:
+  DATABASE_HOST: svc-db-delivery
+  DATABASE_NAME: root
+  DATABASE_PORT: "5432"
+  SERVER_PORT: "3000"
