@@ -41,11 +41,8 @@ spec:
               command:
                 - pg_isready
             failureThreshold: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgresdb
+            periodSeconds: 120
+            timeoutSeconds: 10
           resources:
             requests:
               cpu: 1m
