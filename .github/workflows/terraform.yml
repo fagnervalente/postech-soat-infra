@@ -76,4 +76,10 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: | 
+          terraform apply -auto-approve -input=false
+          aws eks --region $(terraform output -raw region) update-kubeconfig \
+          --name $(terraform output -raw cluster_name)
+          kubectl cluster-info
+          kubectl apply -f infra
+
