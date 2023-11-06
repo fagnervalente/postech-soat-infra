@@ -21,6 +21,7 @@ jobs:
         with:
           # terraform_version: 1.4.2
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_wrapper: false
 
       - name: Terraform Format
         id: fmt
@@ -85,7 +86,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ steps.tf-apply.outputs.region }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install and configure kubectl
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -101,6 +102,6 @@ jobs:
       - name: Deploy Kubernetes
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          aws eks --region ${{ steps.tf-apply.outputs.region }} update-kubeconfig --name ${{ steps.tf-apply.outputs.cluster_name }}
+          aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
           kubectl apply -f infra
 
