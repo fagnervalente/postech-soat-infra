@@ -75,6 +75,7 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
+        id: tf-apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
@@ -84,7 +85,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: $(terraform output -raw region)
+          aws-region: ${{ steps.tf-apply.outputs.region }}
 
       - name: Install and configure kubectl
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -97,9 +98,9 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
       
-      - name: Deploy
+      - name: Deploy Kubernetes
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
+          aws eks --region ${{ steps.tf-apply.outputs.region }} update-kubeconfig --name ${{ steps.tf-apply.outputs.cluster_name }}
           kubectl apply -f infra
 
