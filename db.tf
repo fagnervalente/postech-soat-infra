@@ -45,7 +45,7 @@ resource "aws_db_instance" "delivery" {
   instance_class         = "db.t3.micro"
   allocated_storage      = 5
   engine                 = "postgres"
-  engine_version         = "14.1"
+  engine_version         = "15.3"
   username               = "root"
   password               = "root"
   db_name                = "root"
