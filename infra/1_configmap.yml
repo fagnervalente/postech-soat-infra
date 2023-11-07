@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: delivery-configmap
 data:
-  DATABASE_HOST: svc-db-delivery
-  DATABASE_NAME: root
-  DATABASE_PORT: "5432"
+  DATABASE_HOST: ${DB_HOST}
+  DATABASE_NAME: ${DB_NAME}
+  DATABASE_PORT: ${DB_PORT}
   SERVER_PORT: "3000"
