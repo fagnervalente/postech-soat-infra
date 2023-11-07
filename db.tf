@@ -32,7 +32,7 @@ resource "aws_security_group" "rds" {
 
 resource "aws_db_parameter_group" "delivery" {
   name   = "delivery"
-  family = "postgres14"
+  family = "postgres15"
 
   parameter {
     name  = "log_connections"
