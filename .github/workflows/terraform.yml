@@ -100,6 +100,7 @@ jobs:
           sudo mv kubectl /usr/local/bin/
       
       - name: Set variables
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           export DB_HOST=$(terraform output -raw rds_hostname)
           export DB_PORT=$(terraform output -raw rds_port)
@@ -107,6 +108,7 @@ jobs:
           export DB_PASSWORD=$(terraform output -raw rds_password)
       
       - name: Printing env variables
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           echo "DB PASSWORD: "
           echo $DB_PASSWORD
