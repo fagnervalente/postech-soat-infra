@@ -47,7 +47,7 @@ resource "aws_db_instance" "delivery" {
   engine                 = "postgres"
   engine_version         = "15.3"
   username               = "root"
-  password               = "root"
+  password               = "root1234"
   db_name                = "root"
   db_subnet_group_name   = aws_db_subnet_group.delivery.name
   vpc_security_group_ids = [aws_security_group.rds.id]
