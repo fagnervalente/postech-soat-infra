@@ -44,3 +44,9 @@ output "rds_password" {
   value       = aws_db_instance.delivery.password
   sensitive   = true
 }
+
+output "rds_name" {
+  description = "RDS instance db name"
+  value       = aws_db_instance.delivery.db_name
+  sensitive   = false
+}
