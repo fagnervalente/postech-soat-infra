@@ -98,6 +98,7 @@ jobs:
               --remote-name
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
+          apt-get install gettext-base
       
       - name: Set variables
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -112,5 +113,11 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
-          kubectl apply -f infra
+          envsubst < 0_secret.yml | kubectl apply -f -
+          envsubst < 1_configmap.yml | kubectl apply -f -
+          envsubst < 6_deployment-api.yml | kubectl apply -f -
+          kubectl apply -f 7_svc-api.yml
+          kubectl apply -f 8_metrics.yaml
+          kubectl apply -f 9_hpa-api.yml
+          
 
