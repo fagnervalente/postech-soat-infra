@@ -52,9 +52,9 @@ resource "aws_db_instance" "delivery" {
   allocated_storage      = 5
   engine                 = "postgres"
   engine_version         = "15.3"
-  username               = "root"
+  username               = "postgres"
   password               = random_string.uddin-db-password.result
-  db_name                = "root"
+  db_name                = "delivery"
   db_subnet_group_name   = aws_db_subnet_group.delivery.name
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.delivery.name
