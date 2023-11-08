@@ -76,7 +76,7 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.target_eks_auth.token
 }
 
-resource "kubernetes_config_map" "delivery-configmap" {
+resource "kubernetes_config_map_v1_data" "delivery-configmap" {
   metadata {
     name = "delivery-configmap"
   }
