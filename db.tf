@@ -81,6 +81,8 @@ resource "kubernetes_config_map_v1_data" "delivery-configmap" {
     name = "delivery-configmap"
   }
 
+  force = true
+
   data = {
     DATABASE_HOST     = "${aws_db_instance.delivery.address}"
     DATABASE_NAME     = "${aws_db_instance.delivery.db_name}"
