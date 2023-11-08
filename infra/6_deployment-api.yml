@@ -26,10 +26,6 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: DATABASE_USER
-              value: $DB_USERNAME
-            - name: DATABASE_PASSWORD
-              value: $DB_PASSWORD
             - name: MERCADOPAGO_ACCESS_TOKEN
               valueFrom: 
                 secretKeyRef: 
