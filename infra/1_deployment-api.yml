@@ -27,6 +27,11 @@ spec:
                 secretKeyRef: 
                   key: MERCADOPAGO_ACCESS_TOKEN
                   name: delivery-secret
+            - name: JWT_SECRET
+              valueFrom: 
+                secretKeyRef: 
+                  key: JWT_SECRET
+                  name: delivery-secret
           envFrom:
             - configMapRef:
                 name: delivery-configmap

@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "delivery" {
   name       = "delivery"
-  subnet_ids = module.vpc.public_subnets
+  subnet_ids = module.vpc.private_subnets
 
   tags = {
     Name = "Delivery"
@@ -90,5 +90,6 @@ resource "kubernetes_config_map_v1_data" "delivery-configmap" {
     DATABASE_USER     = "${aws_db_instance.delivery.username}"
     DATABASE_PASSWORD = "${aws_db_instance.delivery.password}"
     SERVER_PORT       = "3000"
+    AUTH_PUT_CLIENT   = "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
   }
 }
