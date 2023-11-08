@@ -98,7 +98,7 @@ jobs:
               --remote-name
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
-          apt-get install gettext-base
+          sudo apt-get install gettext-base
       
       - name: Set variables
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
