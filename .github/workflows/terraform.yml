@@ -113,11 +113,11 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
-          envsubst < 0_secret.yml | kubectl apply -f -
-          envsubst < 1_configmap.yml | kubectl apply -f -
-          envsubst < 6_deployment-api.yml | kubectl apply -f -
-          kubectl apply -f 7_svc-api.yml
-          kubectl apply -f 8_metrics.yaml
-          kubectl apply -f 9_hpa-api.yml
+          envsubst < infra/0_secret.yml | kubectl apply -f -
+          envsubst < infra/1_configmap.yml | kubectl apply -f -
+          envsubst < infra/6_deployment-api.yml | kubectl apply -f -
+          kubectl apply -f infra/7_svc-api.yml
+          kubectl apply -f infra/8_metrics.yaml
+          kubectl apply -f infra/9_hpa-api.yml
           
 
