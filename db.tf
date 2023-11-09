@@ -61,35 +61,3 @@ resource "aws_db_instance" "delivery" {
   publicly_accessible    = true
   skip_final_snapshot    = true
 }
-
-data "aws_eks_cluster" "target_eks" {
-  name = local.cluster_name
-}
-
-data "aws_eks_cluster_auth" "target_eks_auth" {
-  name = local.cluster_name
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.target_eks.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.target_eks.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.target_eks_auth.token
-}
-
-resource "kubernetes_config_map_v1_data" "delivery-configmap" {
-  metadata {
-    name = "delivery-configmap"
-  }
-
-  force = true
-
-  data = {
-    DATABASE_HOST     = "${aws_db_instance.delivery.address}"
-    DATABASE_NAME     = "${aws_db_instance.delivery.db_name}"
-    DATABASE_PORT     = "${aws_db_instance.delivery.port}"
-    DATABASE_USER     = "${aws_db_instance.delivery.username}"
-    DATABASE_PASSWORD = "${aws_db_instance.delivery.password}"
-    SERVER_PORT       = "3000"
-    AUTH_PUT_CLIENT   = "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
-  }
-}
