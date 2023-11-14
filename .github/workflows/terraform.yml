@@ -100,14 +100,28 @@ jobs:
           sudo mv kubectl /usr/local/bin/
           sudo apt-get install gettext-base
       
-      # - name: Set variables
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: |
-      #     export DB_HOST=$(terraform output -raw rds_hostname)
-      #     export DB_PORT=$(terraform output -raw rds_port)
-      #     export DB_NAME=$(terraform output -raw rds_name)
-      #     export DB_USERNAME=$(terraform output -raw rds_username)
-      #     export DB_PASSWORD=$(terraform output -raw rds_password)
+      - name: Set variables
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          export DB_HOST=$(terraform output -raw rds_hostname)
+          export DB_PORT=$(terraform output -raw rds_port)
+          export DB_NAME=$(terraform output -raw rds_name)
+          export DB_USERNAME=$(terraform output -raw rds_username)
+          export DB_PASSWORD=$(terraform output -raw rds_password)
+
+      - name: Update and apply kubernetes configuration files
+        uses: swdotcom/update-and-apply-kubernetes-configs@v1.3.0
+        with:
+          k8-config-file-paths: |
+            infra/1_configmap.yml
+            infra/2_deployment-api.yml
+          replacement-method: defined
+        env:
+          DATABASE_HOST: $DB_HOST
+          DATABASE_NAME: $DB_NAME
+          DATABASE_PORT: $DB_PORT
+          DATABASE_USER: $DB_USERNAME
+          DATABASE_PASSWORD: $DB_PASSWORD
 
       - name: Deploy Kubernetes
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
