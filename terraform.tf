@@ -4,7 +4,7 @@
 terraform {
 
   cloud {
-    organization = "soat-delivery"
+    organization = "Postech"
 
     workspaces {
       name = "soat-delivery-actions"
