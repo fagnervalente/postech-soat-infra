@@ -113,9 +113,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: swdotcom/update-and-apply-kubernetes-configs@v1.3.0
         with:
-          k8-config-file-paths: |
-            infra/1_configmap.yml
-            infra/2_deployment-api.yml
+          k8-config-file-paths: infra/1_configmap.yml
           replacement-method: defined
         env:
           DATABASE_HOST: $DB_HOST
