@@ -110,6 +110,7 @@ jobs:
           export DB_PASSWORD=$(terraform output -raw rds_password)
 
       - name: Update and apply kubernetes configuration files
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: swdotcom/update-and-apply-kubernetes-configs@v1.3.0
         with:
           k8-config-file-paths: |
