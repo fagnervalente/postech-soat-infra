@@ -80,18 +80,18 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
-      - name: Update and apply kubernetes configuration files
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: swdotcom/update-and-apply-kubernetes-configs@v1.3.0
-        with:
-          k8-config-file-paths: infra/1_configmap.yml
-          replacement-method: defined
-        env:
-          DATABASE_HOST: ${{ steps.apply.outputs.rds_hostname }}
-          DATABASE_NAME: ${{ steps.apply.outputs.rds_name }}
-          DATABASE_PORT: ${{ steps.apply.outputs.rds_port }}
-          DATABASE_USER: ${{ steps.apply.outputs.rds_username }}
-          DATABASE_PASSWORD: ${{ steps.apply.outputs.rds_password }}
+      # - name: Update and apply kubernetes configuration files
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   uses: swdotcom/update-and-apply-kubernetes-configs@v1.3.0
+      #   with:
+      #     k8-config-file-paths: infra/1_configmap.yml
+      #     replacement-method: defined
+      #   env:
+      #     DATABASE_HOST: ${{ steps.apply.outputs.rds_hostname }}
+      #     DATABASE_NAME: ${{ steps.apply.outputs.rds_name }}
+      #     DATABASE_PORT: ${{ steps.apply.outputs.rds_port }}
+      #     DATABASE_USER: ${{ steps.apply.outputs.rds_username }}
+      #     DATABASE_PASSWORD: ${{ steps.apply.outputs.rds_password }}
 
       - name: Configure AWS credentials
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'  
