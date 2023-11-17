@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api-delivery-container
-          image: fagnervalente/postech-soat-webserver
+          image: andersonbf/postech-soat-webserver
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

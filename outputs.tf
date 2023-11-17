@@ -6,11 +6,6 @@ output "cluster_endpoint" {
   value       = module.eks.cluster_endpoint
 }
 
-output "cluster_security_group_id" {
-  description = "Security group ids attached to the cluster control plane"
-  value       = module.eks.cluster_security_group_id
-}
-
 output "region" {
   description = "AWS region"
   value       = var.region
@@ -23,30 +18,6 @@ output "cluster_name" {
 
 output "rds_hostname" {
   description = "RDS instance hostname"
-  value       = aws_db_instance.delivery.address
-  sensitive   = false
-}
-
-output "rds_port" {
-  description = "RDS instance port"
-  value       = aws_db_instance.delivery.port
-  sensitive   = false
-}
-
-output "rds_username" {
-  description = "RDS instance root username"
-  value       = aws_db_instance.delivery.username
-  sensitive   = false
-}
-
-output "rds_password" {
-  description = "RDS instance password"
-  value       = aws_db_instance.delivery.password
-  sensitive   = true
-}
-
-output "rds_name" {
-  description = "RDS instance db name"
-  value       = aws_db_instance.delivery.db_name
+  value       = aws_db_instance.delivery_db.address
   sensitive   = false
 }
