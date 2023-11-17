@@ -99,15 +99,6 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
           sudo apt-get install gettext-base
-      
-      # - name: Set variables
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: |
-      #     export DB_HOST=$(terraform output -raw rds_hostname)
-      #     export DB_PORT=$(terraform output -raw rds_port)
-      #     export DB_NAME=$(terraform output -raw rds_name)
-      #     export DB_USERNAME=$(terraform output -raw rds_username)
-      #     export DB_PASSWORD=$(terraform output -raw rds_password)
 
       - name: Deploy Kubernetes
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
