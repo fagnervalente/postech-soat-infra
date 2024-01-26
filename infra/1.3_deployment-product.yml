@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-prduct
+  labels:
+    app: microservice-prduct
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-prduct
+  template:
+    metadata:
+      name: microservice-prduct
+      labels:
+        app: microservice-prduct
+    spec:
+      containers:
+        - name: microservice-prduct-container
+          image: fagnervalente/postech-soat-product-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: delivery-configmap
+          resources:
+            requests:
+              cpu: 250m
