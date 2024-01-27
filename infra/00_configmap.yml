@@ -3,11 +3,11 @@ kind: ConfigMap
 metadata:
   name: delivery-configmap
 data:
-  DATABASE_HOST: ""
-  DATABASE_NAME: ""
-  DATABASE_PORT: ""
-  DATABASE_USER: ""
-  DATABASE_PASSWORD: ""
+  DATABASE_HOST: "postgres-svc"
+  DATABASE_NAME: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "postgres"
+  DATABASE_PASSWORD: "postgres"
   SERVER_PORT: "3000"
   AUTH_PUT_CLIENT: "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
   DATABASE_MONGO_HOST: "mongodb-svc"

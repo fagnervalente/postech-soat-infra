@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: microservice-process-container
-          image: fagnervalente/postech-soat-product-api
+          image: fagnervalente/postech-soat-process-api
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

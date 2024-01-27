@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: svc-microservice-order
 spec:
+  type: ClusterIP
   ports:
     - port: 3000
-      nodePort: 31000
       targetPort: 3000
   selector:
     app: microservice-order
