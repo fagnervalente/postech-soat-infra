@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: microservice-prduct
+  name: microservice-product
   labels:
-    app: microservice-prduct
+    app: microservice-product
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: microservice-prduct
+      app: microservice-product
   template:
     metadata:
-      name: microservice-prduct
+      name: microservice-product
       labels:
-        app: microservice-prduct
+        app: microservice-product
     spec:
       containers:
-        - name: microservice-prduct-container
+        - name: microservice-product-container
           image: fagnervalente/postech-soat-product-api
           imagePullPolicy: Always
           ports:
