@@ -1,3 +1,8 @@
+provider "mongodbatlas" {
+  public_key = ""
+  private_key  = ""
+}
+
 resource "aws_db_subnet_group" "db_subnet" {
   name       = "delivery_db_subnet"
   subnet_ids = aws_subnet.public_subnets[*].id
