@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  containers:
+    - name: postgres
+      image: postgres:latest
+      imagePullPolicy: "IfNotPresent"
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_USER
+          value: $(DATABASE_USER)
+        - name: POSTGRES_PASSWORD
+          value: $(DATABASE_PASSWORD)
+        - name: POSTGRES_DB
+          value: $(DATABASE_NAME)
+      envFrom:
+        - configMapRef:
+            name: delivery-configmap
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-svc
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

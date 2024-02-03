@@ -19,12 +19,24 @@ resource "kubernetes_config_map" "delivery-configmap" {
   }
 
   data = {
-    DATABASE_HOST     = "${aws_db_instance.delivery_db.address}"
-    DATABASE_NAME     = "${aws_db_instance.delivery_db.db_name}"
-    DATABASE_PORT     = "${aws_db_instance.delivery_db.port}"
-    DATABASE_USER     = "${aws_db_instance.delivery_db.username}"
-    DATABASE_PASSWORD = "${aws_db_instance.delivery_db.password}"
-    SERVER_PORT       = "3000"
-    AUTH_PUT_CLIENT   = "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
+    RUN_ON : "production"
+    SERVER_PORT     = "3000"
+    AUTH_PUT_CLIENT = "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
+    MERCADOPAGO_ACCESS_TOKEN : ""
+    DATABASE_HOST             = "${aws_db_instance.delivery_db.address}"
+    DATABASE_NAME             = "${aws_db_instance.delivery_db.db_name}"
+    DATABASE_PORT             = "${aws_db_instance.delivery_db.port}"
+    DATABASE_USER             = "${aws_db_instance.delivery_db.username}"
+    DATABASE_PASSWORD         = "${aws_db_instance.delivery_db.password}"
+    DATABASE_MONGO_HOST       = "${aws_docdb_cluster.docdb.endpoint}"
+    DATABASE_MONGO_PORT       = "${aws_docdb_cluster.docdb.port}"
+    DATABASE_MONGO_USER       = "${aws_docdb_cluster.docdb.master_username}"
+    DATABASE_MONGO_PASSWORD   = "${aws_docdb_cluster.docdb.master_password}"
+    DATABASE_MONGO_NAME       = "${aws_docdb_cluster.docdb.engine}"
+    ORDER_SERVICE_ENDPOINT    = "http://svc-microservice-order:3010/order"
+    PROCESS_SERVICE_ENDPOINT  = "http://svc-microservice-process:3020/orderQueue"
+    PAYMENT_SERVICE_ENDPOINT  = "http://svc-microservice-payment:3030/payment"
+    PRODUCT_SERVICE_ENDPOINT  = "http://svc-microservice-produt:3040"
+    CUSTOMER_SERVICE_ENDPOINT = "http://svc-microservice-user:3050/customer"
   }
 }

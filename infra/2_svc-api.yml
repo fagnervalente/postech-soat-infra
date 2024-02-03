@@ -5,8 +5,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 3000      
-      nodePort: 31000
+    - port: 3100
+      nodePort: 30020
       targetPort: 3000
   selector:
     app: api-delivery

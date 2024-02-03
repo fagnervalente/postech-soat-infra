@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delivery-configmap
+data:
+  DATABASE_HOST: "postgres-svc"
+  DATABASE_NAME: "fast_food"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "postgres"
+  DATABASE_PASSWORD: "123456"
+  SERVER_PORT: "3000"
+  AUTH_PUT_CLIENT: "https://fpgak1gq68.execute-api.us-east-1.amazonaws.com/Prod/"
+  DATABASE_MONGO_HOST: "mongodb-svc"
+  DATABASE_MONGO_PORT: "27017"
+  DATABASE_MONGO_USER: "root"
+  DATABASE_MONGO_PASSWORD: "root"
+  DATABASE_MONGO_NAME: "delivery"
+  RUN_ON: "development"
+  ORDER_SERVICE_ENDPOINT: "http://svc-microservice-order:3010/order"
+  PROCESS_SERVICE_ENDPOINT: "http://svc-microservice-process:3020/orderQueue"
+  PAYMENT_SERVICE_ENDPOINT: "http://svc-microservice-payment:3030/payment"
+  PRODUCT_SERVICE_ENDPOINT: "http://svc-microservice-product:3040"
+  CUSTOMER_SERVICE_ENDPOINT: "http://svc-microservice-user:3050/customer"
+  MERCADOPAGO_ACCESS_TOKEN: ""
