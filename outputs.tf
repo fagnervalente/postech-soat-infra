@@ -21,3 +21,9 @@ output "rds_hostname" {
   value       = aws_db_instance.delivery_db.address
   sensitive   = false
 }
+
+output "docdb_hostname" {
+  description = "Docdb instance hostname"
+  value       = aws_docdb_cluster.docdb.endpoint
+  sensitive   = false
+}
