@@ -2,13 +2,16 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "all" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnets" "all" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 resource "aws_docdb_subnet_group" "docdb_subnet_group" {
   name       = "my-docdb-subnet-group"
-  subnet_ids = data.aws_subnet_ids.all.ids
+  subnet_ids = data.aws_subnets.all.ids
 
   tags = {
     Name = "my-docdb-subnet-group"
@@ -42,10 +45,7 @@ resource "aws_docdb_cluster" "docdb" {
   preferred_backup_window = "07:00-09:00"
   skip_final_snapshot     = true
   db_subnet_group_name    = aws_docdb_subnet_group.docdb_subnet_group.name
-  
-  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
   apply_immediately = true
-  
   engine      = "docdb"
   engine_version = "3.6.0"
   storage_encrypted = true
