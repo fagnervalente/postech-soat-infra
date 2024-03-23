@@ -14,6 +14,12 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.target_eks_auth.token
 }
 
+resource "random_string" "uddin-rabbitmq-password" {
+  length  = 32
+  upper   = true
+  special = false
+}
+
 # Create configMap with the variables necessary for the application
 resource "kubernetes_config_map" "delivery-configmap" {
   metadata {
@@ -35,6 +41,10 @@ resource "kubernetes_config_map" "delivery-configmap" {
     DATABASE_MONGO_USER       = "${aws_docdb_cluster.docdb.master_username}"
     DATABASE_MONGO_PASSWORD   = "${aws_docdb_cluster.docdb.master_password}"
     DATABASE_MONGO_NAME       = "${aws_docdb_cluster.docdb.engine}"
+    RABBITMQ_DEFAULT_USER     = "guess"
+    RABBITMQ_DEFAULT_PASS     = "${random_string.uddin-rabbitmq-password.result}"
+    RABBITMQ_HOST             = "rabbitmq-svc"
+    RABBITMQ_PORT             = "5672"
     ORDER_SERVICE_ENDPOINT    = "http://svc-microservice-order:3010/order"
     PROCESS_SERVICE_ENDPOINT  = "http://svc-microservice-process:3020/orderQueue"
     PAYMENT_SERVICE_ENDPOINT  = "http://svc-microservice-payment:3030/payment"

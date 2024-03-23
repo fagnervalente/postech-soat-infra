@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      name: rabbitmq
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq-container
+          image: rabbitmq:3
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: $(RABBITMQ_USER)
+            - name: RABBITMQ_DEFAULT_PASS
+              value: $(RABBITMQ_PASSWORD)
+          envFrom:
+            - configMapRef:
+                name: delivery-configmap
